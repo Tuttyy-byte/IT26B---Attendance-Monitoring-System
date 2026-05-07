@@ -117,4 +117,141 @@
     }
 
 
-});
+     // Login with API
+    const loginForm = document.getElementById("loginFormElement");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const rememberCheck = document.getElementById("rememberMeCheckbox");
+
+    function loadRememberedLogin() {
+        const savedMail = localStorage.getItem("rem_nexus_email");
+        const savedFlag = localStorage.getItem("rem_nexus_flag");
+        if (savedFlag === "true" && savedMail) {
+            loginEmail.value = savedMail;
+            rememberCheck.checked = true;
+        }
+    }
+    loadRememberedLogin();
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const pwd = loginPassword.value.trim();
+
+            if (!email || !pwd) {
+                showMessage("⚠️ Please enter email and password", true);
+                return;
+            }
+
+            try {
+                const response = await fetch('api/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: pwd })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    if (rememberCheck.checked) {
+                        localStorage.setItem("rem_nexus_email", email);
+                        localStorage.setItem("rem_nexus_flag", "true");
+                    } else {
+                        localStorage.removeItem("rem_nexus_email");
+                        localStorage.setItem("rem_nexus_flag", "false");
+                    }
+
+                    localStorage.setItem("nexus_logged_in_user", JSON.stringify(data.user));
+                    showMessage(`✅ Welcome back, ${data.user.fullname}! Redirecting...`, false);
+                    
+                    setTimeout(() => {
+                        window.location.href = "dashboards.html";
+                    }, 1500);
+                } else {
+                    showMessage("❌ " + data.message, true);
+                }
+            } catch(error) {
+                showMessage("❌ Connection error. Please try again.", true);
+            }
+        });
+    }
+
+
+    // Register with API
+    const regForm = document.getElementById("registerFormElement");
+    const regFull = document.getElementById("regFullname");
+    const regEmail = document.getElementById("regEmail");
+    const regPass = document.getElementById("regPassword");
+    const regConfirm = document.getElementById("regConfirmPassword");
+    const termsBox = document.getElementById("termsCheckbox");
+
+    if (regForm) {
+        regForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const fullname = regFull.value.trim();
+            const emailRaw = regEmail.value.trim();
+            const email = emailRaw.toLowerCase();
+            const password = regPass.value.trim();
+            const confirmPwd = regConfirm.value.trim();
+
+            if (!fullname || !email || !password || !confirmPwd) {
+                showMessage("📝 All fields are required", true);
+                return;
+            }
+            if (password.length < 5) {
+                showMessage("🔐 Password must be at least 5 characters", true);
+                return;
+            }
+            if (password !== confirmPwd) {
+                showMessage("⛔ Passwords do not match", true);
+                return;
+            }
+            if (!termsBox.checked) {
+                showMessage("📜 Please accept Terms & Conditions", true);
+                return;
+            }
+            if (!email.includes("@") || !email.includes(".")) {
+                showMessage("📧 Enter a valid email address", true);
+                return;
+            }
+
+            try {
+                const response = await fetch('api/register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullname: fullname, email: email, password: password })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(`🎉 Account created! Welcome ${fullname}. Please login.`, false);
+                    
+                    regFull.value = "";
+                    regEmail.value = "";
+                    regPass.value = "";
+                    regConfirm.value = "";
+                    termsBox.checked = false;
+
+                    setTimeout(() => {
+                        if(loginTab) loginTab.click();
+                        loginEmail.value = email;
+                        loginPassword.value = "";
+                        showMessage("🔓 Now you can login with your new credentials", false);
+                    }, 1500);
+                } else {
+                    showMessage("❌ " + data.message, true);
+                }
+            } catch(error) {
+                showMessage("❌ Registration failed. Please try again.", true);
+            }
+        });
+    }
+
+    setTimeout(() => {
+        if (!localStorage.getItem("nexus_hint")) {
+            showMessage("💡 Click REGISTER to create an account or use demo@nexus.com / demo123", false);
+            localStorage.setItem("nexus_hint", "true");
+        }
+    }, 600);
+})();
