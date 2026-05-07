@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance Monitoring System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!--MENUBAR SA KEYLED-->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Attendance Monotoring</h2>
+                <p>Northern Bukidnon State College</p>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span>📊</span> Dashboard
+                </button>
+                <button class="nav-item" data-tab="students">
+                    <span>👨‍🎓</span> Students
+                </button>
+                <button class="nav-item" data-tab="mark-attendance">
+                    <span>✅</span> Mark Attendance
+                </button>
+                <button class="nav-item" data-tab="settings">
+                    <span>⚙️</span> Settings
+                </button>
+                <button class="nav-item" id="logoutNavBtn" style="
+              margin-top: auto;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+              margin-top: 20px;
+            ">
+                    <span>🚪</span> Logout
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="date-info" id="currentDate"></div>
+            </div>
+        </aside>
+
+
+        <main class="main-content">
+
+            
+ <header class="top-bar">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="header-stats">
+                    <div class="stat-badge">
+                        <span>📅</span>
+                        <span id="selectedDateDisplay"></span>
+                    </div>
+                </div>
+            </header>
+
+                        
+            <div class="tab-content active" id="dashboard-tab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div class="stat-info">
+                            <h3>Total Students</h3>
+                            <p class="stat-number" id="totalStudents">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>Today's Attendance</h3>
+                            <p class="stat-number" id="todayAttendance">0%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Overall Average</h3>
+                            <p class="stat-number" id="overallAvg">0%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-info">
+                            <h3>Low Attendance (&lt;75%)</h3>
+                            <p class="stat-number" id="lowAttendanceCount">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Recent Attendance Trends (Last 7 Days)</h3>
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>⚠️ Students with Low Attendance (&lt;75%)</h3>
+                    <div class="table-container">
+                        <table id="lowAttendanceTable">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Attendance %</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+ <!-- Students Tab -->
+            <div class="tab-content" id="students-tab">
+                <div class="action-bar">
+                    <button class="btn-primary" id="addStudentBtn">
+                        ➕ Add New Student
+                    </button>
+                    <input type="text" id="searchStudent" placeholder="🔍 Search by name or ID..."
+                        class="search-input" />
+                </div>
+                <div class="table-container">
+                    <table id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Year</th>
+                                <th>Email</th>
+                                <th>Attendance %</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mark Attendance Tab -->
+            <div class="tab-content" id="mark-attendance-tab">
+                <div class="date-selector">
+                    <label>Select Date:</label>
+                    <input type="date" id="attendanceDate" class="date-input" />
+                    <button class="btn-secondary" id="loadAttendanceBtn">
+                        Load Students
+                    </button>
+                    <button class="btn-primary" id="saveAttendanceBtn">
+                        💾 Save Attendance
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="attendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings-tab">
+                <div class="settings-card">
+                    <h3>Course Management</h3>
+                    <div class="input-group">
+                        <input type="text" id="newCourse" placeholder="Enter course name" />
+                        <button class="btn-primary" id="addCourseBtn">Add Course</button>
+                    </div>
+                    <div class="course-list" id="courseList"></div>
+                </div>
+                <div class="settings-card">
+                    <h3>Data Management</h3>
+                    <button class="btn-secondary" id="exportAllDataBtn">
+                        📥 Export All Data
+                    </button>
+                    <button class="btn-danger" id="resetDataBtn">
+                        ⚠️ Reset All Data
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Student</h2>
+            <form id="studentForm">
+                <input type="hidden" id="studentId" />
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text" id="studentName" required />
+                </div>
+                <div class="form-group">
+                    <label>Student ID:</label>
+                    <input type="text" id="studentNumber" required />
+                </div>
+                <div class="form-group">
+                    <label>Course:</label>
+                    <select id="studentCourse" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Year Level:</label>
+                    <select id="studentYear">
+                        <option>1st Year</option>
+                        <option>2nd Year</option>
+                        <option>3rd Year</option>
+                        <option>4th Year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="studentEmail" />
+                </div>
+                <button type="submit" class="btn-primary">Save Student</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
