@@ -1,22 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Attendance Monitoring System</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <canvas id="canvas"></canvas>
 
     <div class="glass-container">
-        
-        <div class="auth-tabs">
-            <button class="tab-btn active" id="loginTabBtn">LOGIN</button>
-            <button class="tab-btn" id="registerTabBtn">REGISTER</button>
-        </div>
+      <div class="auth-tabs">
+        <button class="tab-btn active" id="loginTabBtn">LOGIN</button>
+        <button class="tab-btn" id="registerTabBtn">REGISTER</button>
+      </div>
 
+      <!-- login and register Panel -->
+
+      <div class="form-panel active" id="loginPanel">
+        <div class="login-box">
+          <form id="loginFormElement" action="#" method="post">
+            <h2>⚡ WELCOME BACK</h2>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="mail-outline"></ion-icon
+              ></span>
+              <input
+                type="email"
+                id="loginEmail"
+                required
+                autocomplete="email"
+              />
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="lock-closed-outline"></ion-icon
+              ></span>
+              <input
+                type="password"
+                id="loginPassword"
+                required
+                autocomplete="current-password"
+              />
+              <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+              <label
+                ><input type="checkbox" id="rememberMeCheckbox" /> Remember
+                Me</label
+              >
+              <a href="#" id="fakeForgot">Forgot Password?</a>
+            </div>
+            <button type="submit" id="loginBtn">⟡ LOGIN ⟡</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="form-panel" id="registerPanel">
+        <div class="register-box">
+          <form id="registerFormElement" action="#" method="post">
+            <h2>🔮 CREATE ACCOUNT</h2>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="person-outline"></ion-icon
+              ></span>
+              <input
+                type="text"
+                id="regFullname"
+                required
+                autocomplete="name"
+              />
+              <label>Full Name</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="mail-outline"></ion-icon
+              ></span>
+              <input type="email" id="regEmail" required autocomplete="email" />
+              <label>Email Address</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="lock-closed-outline"></ion-icon
+              ></span>
+              <input
+                type="password"
+                id="regPassword"
+                required
+                autocomplete="new-password"
+              />
+              <label>Password (min. 5 chars)</label>
+            </div>
+            <div class="input-box">
+              <span class="icon"
+                ><ion-icon name="shield-checkmark-outline"></ion-icon
+              ></span>
+              <input
+                type="password"
+                id="regConfirmPassword"
+                required
+                autocomplete="off"
+              />
+              <label>Confirm Password</label>
+            </div>
+            <div class="remember-forgot">
+              <label
+                ><input type="checkbox" id="termsCheckbox" /> I agree to the
+                Terms & Conditions</label
+              >
+            </div>
+            <button type="submit" id="registerBtn">🚀 REGISTER NOW</button>
+          </form>
+        </div>
+      </div>
     </div>
 
-</body>
+    <div id="toastMsg" class="message-toast" style="opacity: 0">
+      ✦ Nexus ready ✦
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script src="script.js"></script>
+  </body>
 </html>
