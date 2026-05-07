@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
 
-require_once '../config/database.php';
+require_once '../config/database.php'; //location sa database php which is naka lain ug folder amen
 $database = new Database();
 $db = $database->getConnection();
 
