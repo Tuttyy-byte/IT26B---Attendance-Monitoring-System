@@ -70,10 +70,7 @@
     animateCanvas();
     canvas.style.pointerEvents = "none";
 
-    //FUNCTION SA BACKGROUND
-
     //TAB SWITCHING FROM LOGIN TO REGISTER
-
     const loginTab = document.getElementById("loginTabBtn");
     const registerTab = document.getElementById("registerTabBtn");
     const loginPanel = document.getElementById("loginPanel");
@@ -106,7 +103,6 @@
         }, 2700);
     }
 
-
     // Forgot password
     const fakeForgot = document.getElementById("fakeForgot");
     if (fakeForgot) {
@@ -116,8 +112,7 @@
         });
     }
 
-
-     // Login with API
+    // Login with API
     const loginForm = document.getElementById("loginFormElement");
     const loginEmail = document.getElementById("loginEmail");
     const loginPassword = document.getElementById("loginPassword");
@@ -165,7 +160,7 @@
                     showMessage(`✅ Welcome back, ${data.user.fullname}! Redirecting...`, false);
                     
                     setTimeout(() => {
-                       window.location.href = "dashboard.html"; 
+                       window.location.href = "dashboard.html";
                     }, 1500);
                 } else {
                     showMessage("❌ " + data.message, true);
@@ -176,8 +171,6 @@
         });
     }
 
-
-    
     const regForm = document.getElementById("registerFormElement");
     const regFull = document.getElementById("regFullname");
     const regEmail = document.getElementById("regEmail");

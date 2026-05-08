@@ -1,8 +1,9 @@
 <?php
+date_default_timezone_set('Asia/Manila');
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -16,6 +17,7 @@ $db = $database->getConnection();
 
 $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 
+error_log("Loading attendance for date: " . $date);
 
 if ($date === 'all') {
     $query = "SELECT a.*, s.name, s.course 
@@ -28,7 +30,6 @@ if ($date === 'all') {
     echo json_encode($attendance);
     exit();
 }
-
 
 $query = "SELECT a.*, s.name, s.course 
           FROM attendance a 

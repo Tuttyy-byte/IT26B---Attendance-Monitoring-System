@@ -962,3 +962,73 @@ tbody tr:hover {
 .nav-item.logout-item:hover {
   background: rgba(229, 62, 62, 0.2);
 }
+
+/* Chart Controls */
+.chart-controls {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.date-range-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.range-btn {
+    padding: 8px 16px;
+    background: #e9ecef;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.range-btn:hover {
+    background: #dee2e6;
+    transform: translateY(-1px);
+}
+
+.range-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.custom-date-range {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+}
+
+.custom-date-range input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.month-selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+}
+
+.month-selector select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 120px;
+}
