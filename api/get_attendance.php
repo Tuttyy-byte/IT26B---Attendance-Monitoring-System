@@ -3,7 +3,7 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 
-// Handle preflight OPTIONS request
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -16,7 +16,7 @@ $db = $database->getConnection();
 
 $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 
-// If date=all, return all attendance records
+
 if ($date === 'all') {
     $query = "SELECT a.*, s.name, s.course 
               FROM attendance a 
@@ -29,7 +29,7 @@ if ($date === 'all') {
     exit();
 }
 
-// Get attendance for specific date
+
 $query = "SELECT a.*, s.name, s.course 
           FROM attendance a 
           RIGHT JOIN students s ON a.student_id = s.id AND a.attendance_date = :date

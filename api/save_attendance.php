@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Handle preflight OPTIONS request
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -15,11 +15,11 @@ require_once '../config/database.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// Get the raw POST data
+
 $raw_data = file_get_contents("php://input");
 $data = json_decode($raw_data);
 
-// Debug: Log the received data
+
 error_log("Received data: " . $raw_data);
 
 if (!$data) {
@@ -56,7 +56,7 @@ try {
     $error_count = 0;
     
     foreach($attendance as $studentId => $record) {
-        // Handle different data structures
+        
         if (is_array($record)) {
             $status = isset($record['status']) ? $record['status'] : 'absent';
             $remarks = isset($record['remarks']) ? $record['remarks'] : '';
@@ -64,15 +64,15 @@ try {
             $status = isset($record->status) ? $record->status : 'absent';
             $remarks = isset($record->remarks) ? $record->remarks : '';
         } else {
-            continue; // Skip invalid records
+            continue; 
         }
         
-        // Validate status
+        
         if (!in_array($status, ['present', 'absent', 'late'])) {
             $status = 'absent';
         }
         
-        // Insert or update attendance
+        
         $query = "INSERT INTO attendance (student_id, attendance_date, status, remarks) 
                   VALUES (:student_id, :date, :status, :remarks)
                   ON DUPLICATE KEY UPDATE 

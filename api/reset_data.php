@@ -9,20 +9,16 @@ $database = new Database();
 $db = $database->getConnection();
 
 try {
-    // Start transaction
+   
     $db->beginTransaction();
     
-    // Delete all attendance records
+
     $db->exec("DELETE FROM attendance");
     
-    // Delete all students
+    
     $db->exec("DELETE FROM students");
     
-    // Reset courses to default (optional - comment out if you want to keep courses)
-    // $db->exec("DELETE FROM courses");
-    // $db->exec("INSERT INTO courses (course_name) VALUES 
-    //     ('Computer Science'), ('Information Technology'), 
-    //     ('Engineering'), ('Business Administration')");
+    
     
     $db->commit();
     

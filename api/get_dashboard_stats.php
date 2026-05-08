@@ -9,13 +9,13 @@ $database = new Database();
 $db = $database->getConnection();
 
 try {
-    // Total students
+ 
     $studentQuery = "SELECT COUNT(*) as total FROM students";
     $studentStmt = $db->prepare($studentQuery);
     $studentStmt->execute();
     $totalStudents = $studentStmt->fetch(PDO::FETCH_ASSOC)['total'];
     
-    // Today's attendance
+    
     $today = date('Y-m-d');
     $todayQuery = "SELECT 
                     COUNT(DISTINCT a.student_id) as present_count
@@ -27,7 +27,7 @@ try {
     $todayData = $todayStmt->fetch(PDO::FETCH_ASSOC);
     $todayPercent = $totalStudents > 0 ? round(($todayData['present_count'] / $totalStudents) * 100, 1) : 0;
     
-    // Overall average (calculate from all attendance records)
+    
     $avgQuery = "SELECT 
                     ROUND(AVG(CASE WHEN status = 'present' THEN 100 ELSE 0 END), 1) as avg_percent
                  FROM attendance";
@@ -36,7 +36,7 @@ try {
     $avgResult = $avgStmt->fetch(PDO::FETCH_ASSOC);
     $overallAvg = $avgResult['avg_percent'] ?: 0;
     
-    // Get students with low attendance (less than 75%)
+    
     $lowQuery = "SELECT 
                     s.id,
                     s.name,
@@ -55,7 +55,7 @@ try {
     $lowStudents = $lowStmt->fetchAll(PDO::FETCH_ASSOC);
     $lowCount = count($lowStudents);
     
-    // Last 7 days trend for chart
+   
     $trendData = [];
     $totalStudentsCount = $totalStudents;
     
