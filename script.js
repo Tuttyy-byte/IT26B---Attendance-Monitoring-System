@@ -165,7 +165,7 @@
                     showMessage(`✅ Welcome back, ${data.user.fullname}! Redirecting...`, false);
                     
                     setTimeout(() => {
-                        window.location.href = "dashboards.html";
+                       indow.location.href = "./MAIN/dashboard.html";
                     }, 1500);
                 } else {
                     showMessage("❌ " + data.message, true);
@@ -177,7 +177,7 @@
     }
 
 
-    // Register with API
+    
     const regForm = document.getElementById("registerFormElement");
     const regFull = document.getElementById("regFullname");
     const regEmail = document.getElementById("regEmail");
@@ -250,7 +250,7 @@
 
     setTimeout(() => {
         if (!localStorage.getItem("nexus_hint")) {
-            showMessage("💡 Click REGISTER to create an account or use demo@nexus.com / demo123", false);
+            showMessage("💡 Click REGISTER to create an account", false);
             localStorage.setItem("nexus_hint", "true");
         }
     }, 600);
