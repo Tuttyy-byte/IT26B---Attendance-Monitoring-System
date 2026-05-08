@@ -165,7 +165,7 @@
                     showMessage(`✅ Welcome back, ${data.user.fullname}! Redirecting...`, false);
                     
                     setTimeout(() => {
-                       indow.location.href = "./MAIN/dashboard.html";
+                       window.location.href = "dashboard.html"; 
                     }, 1500);
                 } else {
                     showMessage("❌ " + data.message, true);
